@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace TestXamarinApp
@@ -46,7 +47,6 @@ namespace TestXamarinApp
                     brightPinkScale[x, y] = new Pixel(red, green, blue);
                 }
             }
-
             return brightPinkScale;
         }
     }

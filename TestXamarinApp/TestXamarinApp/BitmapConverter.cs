@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using Android.Graphics;
@@ -10,18 +11,25 @@ namespace TestXamarinApp
     public class BitmapConverter
     {
         private const int ResizeRate = 1;
+
         public static Pixel[,] LoadPixels(Bitmap bmp)
         {
             var pixels = new Pixel[bmp.Width, bmp.Height];
-            for (var x = 0; x < bmp.Width; x++)
+
+            int[] pixelArray = new int[bmp.Width * bmp.Height];
+            bmp.GetPixels(pixelArray, 0, bmp.Width, 0, 0, bmp.Width, bmp.Height);
+
+            int index = 0;
+            for (var y = 0; y < bmp.Height; y++)
             {
-                for (var y = 0; y < bmp.Height; y++)
+                for (var x = 0; x < bmp.Width; x++)
                 {
-                    int pixelColor = bmp.GetPixel(x, y);
+                    int pixelColor = pixelArray[index];
                     byte red = (byte)((pixelColor >> 16) & 0xFF);
                     byte green = (byte)((pixelColor >> 8) & 0xFF);
                     byte blue = (byte)(pixelColor & 0xFF);
                     pixels[x, y] = new Pixel(red, green, blue);
+                    index++;
                 }
             }
             return pixels;
@@ -30,25 +38,29 @@ namespace TestXamarinApp
         public static Bitmap ConvertToBitmap(int width, int height, Func<int, int, Color> getPixelColor)
         {
             Bitmap bmp = Bitmap.CreateBitmap(ResizeRate * width, ResizeRate * height, Bitmap.Config.Argb8888);
-            for (var x = 0; x < width; x++)
-                for (var y = 0; y < height; y++)
-                    bmp.SetPixel(ResizeRate * x, ResizeRate * y, getPixelColor(x, y));
+
+            int[] pixelArray = new int[width * height];
+            int index = 0;
+            for (var y = 0; y < height; y++)
+            {
+                for (var x = 0; x < width; x++)
+                {
+                    Color pixelColor = getPixelColor(x, y);
+                    pixelArray[index] = (pixelColor.A << 24) | (pixelColor.R << 16) | (pixelColor.G << 8) | pixelColor.B;
+                    index++;
+                }
+            }
+
+            bmp.SetPixels(pixelArray, 0, width * ResizeRate, 0, 0, width * ResizeRate, height * ResizeRate);
 
             return bmp;
-        }
-
-        public static Bitmap ConvertToBitmap(Pixel[,] array)
-        {
-            int width = array.GetLength(0);
-            int height = array.GetLength(1);
-            return ConvertToBitmap(width, height,
-                (x, y) => new Color(array[x, y].R, array[x, y].G, array[x, y].B));
         }
 
         public static Bitmap ConvertToBitmap(double[,] array)
         {
             int width = array.GetLength(0);
             int height = array.GetLength(1);
+
             return ConvertToBitmap(width, height, (x, y) =>
             {
                 int gray = (int)(255 * array[x, y]);
@@ -58,10 +70,16 @@ namespace TestXamarinApp
             });
         }
 
-        public static Bitmap BytesToBitmap(byte[] imageBytes)
+        public static Bitmap ConvertToBitmap(Pixel[,] array)
         {
-            Bitmap bitmap = BitmapFactory.DecodeByteArray(imageBytes, 0, imageBytes.Length);
-            return bitmap;
+            int width = array.GetLength(0);
+            int height = array.GetLength(1);
+
+            return ConvertToBitmap(width, height, (x, y) =>
+            {
+                Pixel pixel = array[x, y];
+                return new Color(pixel.R, pixel.G, pixel.B);
+            });
         }
 
         public static byte[] GetImageBytes(Bitmap bitmap)
@@ -75,22 +93,33 @@ namespace TestXamarinApp
 
         public static Bitmap CompressWithAspectRatio(byte[] imageBytes, int maxWidth, int maxHeight)
         {
-            using (MemoryStream memoryStream = new MemoryStream(imageBytes))
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.InJustDecodeBounds = true;
+
+            BitmapFactory.DecodeByteArray(imageBytes, 0, imageBytes.Length, options);
+
+            int width = options.OutWidth;
+            int height = options.OutHeight;
+
+            if (width <= maxWidth && height <= maxHeight)
             {
-                Bitmap bitmap = BitmapFactory.DecodeStream(memoryStream);
-
-                int width = bitmap.Width;
-                int height = bitmap.Height;
-
-                float scaleFactor = Math.Min((float)maxWidth / width, (float)maxHeight / height);
-
-                int newWidth = (int)(width * scaleFactor);
-                int newHeight = (int)(height * scaleFactor);
-
-                Bitmap resizedBitmap = Bitmap.CreateScaledBitmap(bitmap, newWidth, newHeight, true);
-
-                return resizedBitmap;
+                return BitmapFactory.DecodeByteArray(imageBytes, 0, imageBytes.Length);
             }
+
+            float scaleFactor = Math.Min((float)maxWidth / width, (float)maxHeight / height);
+
+            int newWidth = (int)(width * scaleFactor);
+            int newHeight = (int)(height * scaleFactor);
+
+            options.InJustDecodeBounds = false;
+
+            Bitmap bitmap = BitmapFactory.DecodeByteArray(imageBytes, 0, imageBytes.Length, options);
+
+            Bitmap resizedBitmap = Bitmap.CreateScaledBitmap(bitmap, newWidth, newHeight, true);
+
+            bitmap.Recycle();
+
+            return resizedBitmap;
         }
     }
 }

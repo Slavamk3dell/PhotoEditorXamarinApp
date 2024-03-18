@@ -29,5 +29,10 @@ namespace TestXamarinApp
         {
             return $"Pixel({R}, {G}, {B})";
         }
+
+        public Color ToColor()
+        {
+            return new Color(R, G, B);
+        }
     }
 }
