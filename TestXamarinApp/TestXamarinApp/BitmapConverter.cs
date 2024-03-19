@@ -5,6 +5,7 @@ using System.IO;
 using System.Text;
 using Android.Graphics;
 using Color = Android.Graphics.Color;
+using SkiaSharp;
 
 namespace TestXamarinApp
 {

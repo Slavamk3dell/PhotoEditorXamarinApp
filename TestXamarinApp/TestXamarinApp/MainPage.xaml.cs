@@ -11,6 +11,7 @@ using Xamarin.Essentials;
 using System.IO;
 using System.Threading;
 using Android.Graphics;
+using SkiaSharp;
 
 namespace TestXamarinApp
 {
@@ -81,16 +82,21 @@ namespace TestXamarinApp
                     imageActivityIndicator.IsVisible = true;
                     imageFromGallery.IsVisible = false;
 
+                    //await Task.Run(() =>
+                    //{
+                    //    Bitmap bitmapImage = BitmapConverter.CompressWithAspectRatio(currentImageBytes, maxWidth: 1920, maxHeight: 1920);
+                    //    Pixel[,] pixelsOfBitmap = BitmapConverter.LoadPixels(bitmapImage);
+                    //    var colorScale = ColorScaleFilter.ToGrayscale(pixelsOfBitmap);
+                    //    Bitmap bitmapOfGrayScale = BitmapConverter.ConvertToBitmap(colorScale);
+                    //    currentImageBytes = BitmapConverter.GetImageBytes(bitmapOfGrayScale);
+                    //});
                     await Task.Run(() =>
                     {
-                        Bitmap bitmapImage = BitmapConverter.CompressWithAspectRatio(currentImageBytes, maxWidth: 1920, maxHeight: 1920);
-                        Pixel[,] pixelsOfBitmap = BitmapConverter.LoadPixels(bitmapImage);
-                        var colorScale = ColorScaleFilter.ToGrayscale(pixelsOfBitmap);
-                        Bitmap bitmapOfGrayScale = BitmapConverter.ConvertToBitmap(colorScale);
-                        currentImageBytes = BitmapConverter.GetImageBytes(bitmapOfGrayScale);
+                        SKBitmap bitmapImage = SKBitmapConverter.CreateSKBitmapFromBytes(currentImageBytes);
+                        SKBitmap bitmapColorScaleImage = SKBitmapConverter.ApplyGrayScaleFilter(bitmapImage);
+                        currentImageBytes = SKBitmapConverter.ConvertSKBitmapToBytes(bitmapColorScaleImage, SKEncodedImageFormat.Jpeg);
+                        imageFromGallery.Source = ImageSource.FromStream(() => new MemoryStream(currentImageBytes));
                     });
-
-                    imageFromGallery.Source = ImageSource.FromStream(() => new MemoryStream(currentImageBytes));
                 }
                 catch (Exception)
                 {
