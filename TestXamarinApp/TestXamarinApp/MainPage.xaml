@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
              x:Class="TestXamarinApp.MainPage">
 
     <StackLayout>
@@ -16,7 +17,7 @@
         </Button>
 
         <Button x:Name="actionButton" 
-                Text="Покрасить фото в серый" 
+                Text="Черно-Белый Фильтр" 
                 BackgroundColor="Beige" 
                 FontAttributes="Bold" 
                 TextColor="Black" 
@@ -37,12 +38,12 @@
                 Margin="30,10,30,0">
         </Button>
 
-        <AbsoluteLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Padding="0,0,0,15">
+        <AbsoluteLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="30, 10, 30, 18">
             <Image x:Name="imageFromGallery"
            Aspect="AspectFit"
            AbsoluteLayout.LayoutBounds="0,0,1,1"
            AbsoluteLayout.LayoutFlags="All"
-           Margin="30, 10, 30, 0"
+           Margin="0, 0, 0, 0"
            HeightRequest="300"/>
             <ActivityIndicator x:Name="imageActivityIndicator"
                        Color="Gray"
