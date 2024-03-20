@@ -5,6 +5,7 @@ using SkiaSharp;
 using System.IO;
 using Xamarin.Forms;
 using Android.Graphics;
+using SkiaSharp.Views.Forms;
 
 namespace TestXamarinApp
 {
@@ -38,38 +39,12 @@ namespace TestXamarinApp
             }
         }
 
-        public static SKBitmap ApplyGrayScaleFilter(SKBitmap originalBitmap)
+        public static byte[] GetImageBytesFromSKBitmap(SKBitmap bitmap, SKEncodedImageFormat format)
         {
-            SKBitmap resultBitmap = new SKBitmap(originalBitmap.Info);
-
-            using (SKCanvas canvas = new SKCanvas(resultBitmap))
+            using (SKImage image = SKImage.FromBitmap(bitmap))
+            using (var data = image.Encode(format, 100))
             {
-                using (SKPaint paint = new SKPaint())
-                {
-                    paint.ColorFilter = SKColorFilter.CreateColorMatrix(new float[]
-                    {
-                0.21f, 0.72f, 0.07f, 0, 0,
-                0.21f, 0.72f, 0.07f, 0, 0,
-                0.21f, 0.72f, 0.07f, 0, 0,
-                0,     0,     0,     1, 0
-                    });
-
-                    // Рисуем исходное изображение с применением цветового фильтра
-                    canvas.DrawBitmap(originalBitmap, 0, 0, paint);
-                }
-            }
-
-            return resultBitmap;
-        }
-
-
-        public static byte[] ConvertSKBitmapToBytes(SKBitmap bitmap, SKEncodedImageFormat format)
-        {
-            using (MemoryStream stream = new MemoryStream())
-            {
-                bitmap.Encode(stream, format, 100);
-
-                return stream.ToArray();
+                return data.ToArray();
             }
         }
     }

@@ -12,6 +12,8 @@ using System.IO;
 using System.Threading;
 using Android.Graphics;
 using SkiaSharp;
+using SkiaSharp.Views.Forms;
+using Android.Views;
 
 namespace TestXamarinApp
 {
@@ -21,8 +23,6 @@ namespace TestXamarinApp
         public MainPage()
         {
             InitializeComponent();
-            //string uriImage = "https://img.freepik.com/free-photo/cute-domestic-kitten-sits-at-window-staring-outside-generative-ai_188544-12519.jpg?size=626&ext=jpg&ga=GA1.1.1292351815.1710028800&semt=ais";
-            //imageFromGellary.Source = new Uri(uriImage);
         }
 
         async void OnPickPhotoButtonClicked(object sender, EventArgs e)
@@ -82,21 +82,19 @@ namespace TestXamarinApp
                     imageActivityIndicator.IsVisible = true;
                     imageFromGallery.IsVisible = false;
 
-                    //await Task.Run(() =>
-                    //{
-                    //    Bitmap bitmapImage = BitmapConverter.CompressWithAspectRatio(currentImageBytes, maxWidth: 1920, maxHeight: 1920);
-                    //    Pixel[,] pixelsOfBitmap = BitmapConverter.LoadPixels(bitmapImage);
-                    //    var colorScale = ColorScaleFilter.ToGrayscale(pixelsOfBitmap);
-                    //    Bitmap bitmapOfGrayScale = BitmapConverter.ConvertToBitmap(colorScale);
-                    //    currentImageBytes = BitmapConverter.GetImageBytes(bitmapOfGrayScale);
-                    //});
                     await Task.Run(() =>
                     {
-                        SKBitmap bitmapImage = SKBitmapConverter.CreateSKBitmapFromBytes(currentImageBytes);
-                        SKBitmap bitmapColorScaleImage = SKBitmapConverter.ApplyGrayScaleFilter(bitmapImage);
-                        currentImageBytes = SKBitmapConverter.ConvertSKBitmapToBytes(bitmapColorScaleImage, SKEncodedImageFormat.Jpeg);
-                        imageFromGallery.Source = ImageSource.FromStream(() => new MemoryStream(currentImageBytes));
+                        var imageBitmap = SKBitmapConverter.CreateSKBitmapFromBytes(currentImageBytes);
+                        ColorMatrixFilter.ApplyColorFilterToSKBitmap(imageBitmap, new float[]
+                        {
+                            0.2126f, 0.7152f, 0.0722f, 0, 0,
+                            0.2126f, 0.7152f, 0.0722f, 0, 0,
+                            0.2126f, 0.7152f, 0.0722f, 0, 0,
+                            0,       0,       0,       1, 0
+                        });
+                        currentImageBytes = SKBitmapConverter.GetImageBytesFromSKBitmap(imageBitmap, SKEncodedImageFormat.Jpeg);
                     });
+                    imageFromGallery.Source = ImageSource.FromStream(() => new MemoryStream(currentImageBytes));
                 }
                 catch (Exception)
                 {
@@ -110,10 +108,11 @@ namespace TestXamarinApp
                     imageActivityIndicator.IsRunning = false;
                     imageActivityIndicator.IsVisible = false;
                     imageFromGallery.IsVisible = true;
-
-                    await DisplayAlert("Готово", "Изображение успешно обработано.", "OK");
                 } 
             }
         }
+
+        
+
     }
 }
