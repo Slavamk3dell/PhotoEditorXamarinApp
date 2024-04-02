@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
              x:Class="TestXamarinApp.MainPage">
 
     <StackLayout>
@@ -37,14 +36,15 @@
                 HorizontalOptions="Center"
                 Margin="30,10,30,0">
         </Button>
-
+        
         <AbsoluteLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="30, 10, 30, 18">
             <Image x:Name="imageFromGallery"
            Aspect="AspectFit"
            AbsoluteLayout.LayoutBounds="0,0,1,1"
            AbsoluteLayout.LayoutFlags="All"
            Margin="0, 0, 0, 0"
-           HeightRequest="300"/>
+           HeightRequest="300"
+           Source="saveButton2.png"/>
             <ActivityIndicator x:Name="imageActivityIndicator"
                        Color="Gray"
                        IsRunning="False"

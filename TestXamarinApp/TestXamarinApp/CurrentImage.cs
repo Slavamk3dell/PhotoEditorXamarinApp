@@ -1,5 +1,4 @@
-﻿using Android.Graphics;
-using SkiaSharp;
+﻿using SkiaSharp;
 using System;
 using System.Collections.Generic;
 using System.Text;

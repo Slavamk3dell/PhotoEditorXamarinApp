@@ -4,7 +4,6 @@ using System.Text;
 using SkiaSharp;
 using System.IO;
 using Xamarin.Forms;
-using Android.Graphics;
 using SkiaSharp.Views.Forms;
 
 namespace TestXamarinApp
