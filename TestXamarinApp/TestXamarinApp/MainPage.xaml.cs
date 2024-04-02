@@ -10,10 +10,8 @@ using Xamarin.Forms.Xaml;
 using Xamarin.Essentials;
 using System.IO;
 using System.Threading;
-using Android.Graphics;
 using SkiaSharp;
 using SkiaSharp.Views.Forms;
-using Android.Views;
 
 namespace TestXamarinApp
 {
