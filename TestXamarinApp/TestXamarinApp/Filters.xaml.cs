@@ -21,13 +21,10 @@ namespace TestXamarinApp
         public Filters()
         {
             InitializeComponent();
-            imageFromGallery.Source = "filters.png";
         }
 
         async void OnPickPhotoButtonClicked(object sender, EventArgs e)
         {
-            (sender as Xamarin.Forms.Button).IsEnabled = false;
-
             Stream stream = await DependencyService.Get<IImageService>().GetImageStreamAsync();
             if (stream != null)
             {
@@ -40,8 +37,6 @@ namespace TestXamarinApp
                     imageFromGallery.Source = ImageSource.FromStream(() => new MemoryStream(currentImageBytes));
                 }
             }
-
-            (sender as Xamarin.Forms.Button).IsEnabled = true;
         }
 
         async void SaveToGalleryButtonClicked(object sender, EventArgs e)
@@ -50,7 +45,6 @@ namespace TestXamarinApp
             {
                 try
                 {
-                    (sender as Xamarin.Forms.Button).IsEnabled = false;
                     await Task.Run(() =>
                     {
                         DependencyService.Get<IImageService>().SaveImageToGallery(currentImageBytes);
@@ -63,7 +57,6 @@ namespace TestXamarinApp
                 }
                 finally
                 {
-                    (sender as Xamarin.Forms.Button).IsEnabled = true;
                     await DisplayAlert("Готово", "Изображение успешно сохранено!!!", "OK");
                 }
             }
@@ -71,12 +64,69 @@ namespace TestXamarinApp
 
         async void OnActionButtonClicked(object sender, EventArgs e)
         {
+            float[] filter = new float[0];
             if (currentImageBytes != null)
             {
+                string result = await DisplayActionSheet("Выбор фильтра", "Отмена", null, "Черно-белый", "Теплый", "Холодный", "Светлый", "Темный");
+
+                switch (result)
+                {
+                    case "Черно-белый":
+                        filter = new float[]
+                        {
+                            0.2126f, 0.7152f, 0.0722f, 0, 0,
+                            0.2126f, 0.7152f, 0.0722f, 0, 0,
+                            0.2126f, 0.7152f, 0.0722f, 0, 0,
+                            0,       0,       0,       1, 0
+                        };
+                        break;
+
+                    case "Теплый":
+                        filter = new float[]
+                        {
+                            1.2f, 0.0f, 0.0f, 0.0f, 0.0f,
+                            0.0f, 1.1f, 0.0f, 0.0f, 0.0f,
+                            0.0f, 0.1f, 0.9f, 0.0f, 0.0f,
+                            0.0f, 0.0f, 0.0f, 1.0f, 0.0f
+                        };
+                        break;
+
+                    case "Холодный":
+                        filter = new float[]
+                        {
+                            0.8f, 0.0f, 0.0f, 0.0f, 0.0f,
+                            0.0f, 0.8f, 0.0f, 0.0f, 0.0f,
+                            0.0f, 0.0f, 1.2f, 0.0f, 0.0f,
+                            0.0f, 0.0f, 0.0f, 1.0f, 0.0f
+                        };
+                        break;
+
+                    case "Светлый":
+                        filter = new float[]
+                        {
+                            1.3f, 1.1f, 0.0f, 0.0f, 0.0f,
+                            0.3f, 1.2f, 0.3f, 0.0f, 0.0f,
+                            0.0f, 0.3f, 1.3f, 0.0f, 0.0f,
+                            0.0f, 0.0f, 0.0f, 1.0f, 0.0f
+                        };
+                        break;
+
+                    case "Темный":
+                        filter = new float[]
+                        {
+                            0.5f, 0.0f, 0.0f, 0.0f, 0.0f,
+                            0.0f, 0.5f, 0.0f, 0.0f, 0.0f,
+                            0.0f, 0.0f, 0.5f, 0.0f, 0.0f,
+                            0.0f, 0.0f, 0.0f, 1.0f, 0.0f
+                        };
+                        break;
+
+                    default:
+                        return;
+                }
+
                 try
                 {
-                    (sender as Xamarin.Forms.Button).IsEnabled = false;
-
                     imageActivityIndicator.IsRunning = true;
                     imageActivityIndicator.IsVisible = true;
                     imageFromGallery.IsVisible = false;
@@ -84,13 +134,7 @@ namespace TestXamarinApp
                     await Task.Run(() =>
                     {
                         var imageBitmap = SKBitmapConverter.CreateSKBitmapFromBytes(currentImageBytes);
-                        ColorMatrixFilter.ApplyColorFilterToSKBitmap(imageBitmap, new float[]
-                        {
-                            0.2126f, 0.7152f, 0.0722f, 0, 0,
-                            0.2126f, 0.7152f, 0.0722f, 0, 0,
-                            0.2126f, 0.7152f, 0.0722f, 0, 0,
-                            0,       0,       0,       1, 0
-                        });
+                        ColorMatrixFilter.ApplyColorFilterToSKBitmap(imageBitmap, filter);
                         currentImageBytes = SKBitmapConverter.GetImageBytesFromSKBitmap(imageBitmap, SKEncodedImageFormat.Jpeg);
                     });
                     imageFromGallery.Source = ImageSource.FromStream(() => new MemoryStream(currentImageBytes));
@@ -102,8 +146,6 @@ namespace TestXamarinApp
                 }
                 finally
                 {
-                    (sender as Xamarin.Forms.Button).IsEnabled = true;
-
                     imageActivityIndicator.IsRunning = false;
                     imageActivityIndicator.IsVisible = false;
                     imageFromGallery.IsVisible = true;

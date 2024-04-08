@@ -5,13 +5,26 @@
             xmlns:local="clr-namespace:TestXamarinApp"
             NavigationPage.HasNavigationBar="false"
             BarBackgroundColor="Black"
-            SelectedTabColor="Red"
+            SelectedTabColor="#3cbdfe"
             UnselectedTabColor= "White"
             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
             android:TabbedPage.ToolbarPlacement="Bottom">
 
-    <local:Filters Title="Filters" IconImageSource="filters.png"/>
-    <ContentPage Title="Other" IconImageSource="filters.png">
+    <NavigationPage Title="Filters" IconImageSource="filters.png">
+        <x:Arguments>
+            <local:Filters Title="Filters" IconImageSource="filters.png"/>
+        </x:Arguments>
+
+        <NavigationPage.BarBackgroundColor>
+            <Color>#000000</Color>
+        </NavigationPage.BarBackgroundColor>
+
+        <NavigationPage.BarTextColor>
+            <Color>#3cbdfe</Color>
+        </NavigationPage.BarTextColor>
+    </NavigationPage>
+
+    <ContentPage Title="Other" IconImageSource="saveButton2.png">
         <Label Text="А здесь пока ничего нет"
                FontSize="25"
                VerticalOptions="Center"

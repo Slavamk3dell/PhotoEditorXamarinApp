@@ -2,51 +2,38 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TestXamarinApp.Filters">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Text="Выбрать фильтр"
+            IconImageSource="filterButton.png"
+            Priority="0"
+            Order="Primary"
+            Clicked="OnActionButtonClicked"/>
+        <ToolbarItem Text="Выбрать фото"
+                     IconImageSource="addButton10.png"
+                     Priority="1"
+                     Order="Primary"
+                     Clicked="OnPickPhotoButtonClicked"/>
+        <ToolbarItem Text="Сохранить фото"
+                     IconImageSource="saveButton3.png"
+                     Priority="2"
+                     Order="Primary"
+                     Clicked="SaveToGalleryButtonClicked"/>
+        <ToolbarItem Text="Инфо"
+                     Order="Secondary"/>
+    </ContentPage.ToolbarItems>
+    
     <ContentPage.Content>
         <StackLayout>
-            <Button x:Name="loadButton" 
-            Text="Выбрать Фото" 
-            BackgroundColor="Beige" 
-            FontAttributes="Bold" 
-            TextColor="Black" 
-            Padding="30,15,30,15" 
-            HorizontalOptions="Center" 
-            Margin="30,10,30,0" 
-            Clicked="OnPickPhotoButtonClicked">
-            </Button>
-
-            <Button x:Name="actionButton" 
-            Text="Черно-Белый Фильтр" 
-            BackgroundColor="Beige" 
-            FontAttributes="Bold" 
-            TextColor="Black" 
-            Padding="30,15,30,15" 
-            HorizontalOptions="Center" 
-            Margin="30,10,30,0" 
-            Clicked="OnActionButtonClicked">
-            </Button>
-
-            <Button x:Name="saveButton"
-            Text="Сохранить Фото"
-            Clicked="SaveToGalleryButtonClicked"
-            BackgroundColor="Beige"
-            FontAttributes="Bold"
-            TextColor="Black"
-            Padding="30,15,30,15"
-            HorizontalOptions="Center"
-            Margin="30,10,30,0">
-            </Button>
-
             <AbsoluteLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="30, 10, 30, 18">
                 <Image x:Name="imageFromGallery"
                     Aspect="AspectFit"
                     AbsoluteLayout.LayoutBounds="0,0,1,1"
                     AbsoluteLayout.LayoutFlags="All"
                     Margin="0, 0, 0, 0"
-                    HeightRequest="300"
-                    Source="saveButton2.png"/>
+                    HeightRequest="300"/>
                 <ActivityIndicator x:Name="imageActivityIndicator"
-                   Color="Gray"
+                   Color="#3cbdfe"
                    IsRunning="False"
                    IsVisible="False"
                    AbsoluteLayout.LayoutBounds="0.5,0.5,50,50"

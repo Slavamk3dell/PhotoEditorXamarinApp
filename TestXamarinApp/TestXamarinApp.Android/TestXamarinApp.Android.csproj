@@ -106,9 +106,19 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\images.jpg" />
-    <AndroidResource Include="Resources\drawable\saveButton.png" />
     <AndroidResource Include="Resources\drawable\saveButton2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\add4.png" />
+    <AndroidResource Include="Resources\drawable\save4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\addButton.png" />
+    <AndroidResource Include="Resources\drawable\filterButton.png" />
+    <AndroidResource Include="Resources\drawable\addButtonFinal.png" />
+    <AndroidResource Include="Resources\drawable\addButton10.png" />
+    <Content Include="Resources\drawable\saveButton.png" />
+    <AndroidResource Include="Resources\drawable\saveButton3.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

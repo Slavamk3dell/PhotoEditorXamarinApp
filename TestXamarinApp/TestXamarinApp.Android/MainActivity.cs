@@ -9,6 +9,7 @@ using Android.Content;
 using System.IO;
 using TestXamarinApp.Droid;
 using Xamarin.Forms;
+using Android.Widget;
 
 [assembly: Dependency(typeof(ImageService))]
 namespace TestXamarinApp.Droid
