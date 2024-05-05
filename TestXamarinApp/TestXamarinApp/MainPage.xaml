@@ -24,10 +24,5 @@
         </NavigationPage.BarTextColor>
     </NavigationPage>
 
-    <ContentPage Title="Other" IconImageSource="saveButton2.png">
-        <Label Text="А здесь пока ничего нет"
-               FontSize="25"
-               VerticalOptions="Center"
-               HorizontalOptions="Center"></Label>
-    </ContentPage>
+    <local:Generation Title="Generation" IconImageSource="filterButton.png"/>
 </TabbedPage>

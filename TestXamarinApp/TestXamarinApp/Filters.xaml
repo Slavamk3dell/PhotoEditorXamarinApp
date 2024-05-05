@@ -19,8 +19,6 @@
                      Priority="2"
                      Order="Primary"
                      Clicked="SaveToGalleryButtonClicked"/>
-        <ToolbarItem Text="Инфо"
-                     Order="Secondary"/>
     </ContentPage.ToolbarItems>
     
     <ContentPage.Content>
