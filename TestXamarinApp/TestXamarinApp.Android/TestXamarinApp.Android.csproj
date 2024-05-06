@@ -117,6 +117,7 @@
     <AndroidResource Include="Resources\drawable\filterButton.png" />
     <AndroidResource Include="Resources\drawable\addButtonFinal.png" />
     <AndroidResource Include="Resources\drawable\addButton10.png" />
+    <AndroidResource Include="Resources\drawable\AI.png" />
     <Content Include="Resources\drawable\saveButton.png" />
     <AndroidResource Include="Resources\drawable\saveButton3.png" />
   </ItemGroup>

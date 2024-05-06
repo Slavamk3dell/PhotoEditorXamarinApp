@@ -24,5 +24,17 @@
         </NavigationPage.BarTextColor>
     </NavigationPage>
 
-    <local:Generation Title="Generation" IconImageSource="filterButton.png"/>
+    <NavigationPage Title="Generation" IconImageSource="AI.png">
+        <x:Arguments>
+            <local:Generation Title="Generation" IconImageSource="filterButton.png"/>
+        </x:Arguments>
+
+        <NavigationPage.BarBackgroundColor>
+            <Color>#000000</Color>
+        </NavigationPage.BarBackgroundColor>
+
+        <NavigationPage.BarTextColor>
+            <Color>#3cbdfe</Color>
+        </NavigationPage.BarTextColor>
+    </NavigationPage>
 </TabbedPage>

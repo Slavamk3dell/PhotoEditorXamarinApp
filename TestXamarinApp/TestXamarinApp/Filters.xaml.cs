@@ -17,10 +17,18 @@ namespace TestXamarinApp
 {
     public partial class Filters : ContentPage
     {
-        public static byte[] currentImageBytes;
+        private static byte[] currentImageBytes;
+        private static byte[] filterImageBytes;
         public Filters()
         {
             InitializeComponent();
+            MessagingCenter.Subscribe<Generation, byte[]>(this, "ImageChanged", (sender, newImage) =>
+            {
+                currentImageBytes = newImage;
+                filterImageBytes = null;
+                imageFromGallery.Source = ImageSource.FromStream(() => new MemoryStream(currentImageBytes));
+                LabelMessage.IsVisible = false;
+            });
         }
 
         async void OnPickPhotoButtonClicked(object sender, EventArgs e)
@@ -36,6 +44,7 @@ namespace TestXamarinApp
 
                     imageFromGallery.Source = ImageSource.FromStream(() => new MemoryStream(currentImageBytes));
                 }
+                LabelMessage.IsVisible = false;
             }
         }
 
@@ -47,7 +56,14 @@ namespace TestXamarinApp
                 {
                     await Task.Run(() =>
                     {
-                        DependencyService.Get<IImageService>().SaveImageToGallery(currentImageBytes);
+                        if (filterImageBytes != null)
+                        {
+                            DependencyService.Get<IImageService>().SaveImageToGallery(filterImageBytes);
+                            currentImageBytes = filterImageBytes;
+                            filterImageBytes = null;
+                        }
+                        else
+                            DependencyService.Get<IImageService>().SaveImageToGallery(currentImageBytes); 
                     });
                 }
                 catch (Exception)
@@ -60,6 +76,10 @@ namespace TestXamarinApp
                     await DisplayAlert("Готово", "Изображение успешно сохранено!!!", "OK");
                 }
             }
+            else
+            {
+                await DisplayAlert("Ошибка", "Изображение для сохранения отсутствует", "ОК");
+            }
         }
 
         async void OnActionButtonClicked(object sender, EventArgs e)
@@ -67,10 +87,15 @@ namespace TestXamarinApp
             float[] filter = new float[0];
             if (currentImageBytes != null)
             {
-                string result = await DisplayActionSheet("Выбор фильтра", "Отмена", null, "Черно-белый", "Теплый", "Холодный", "Светлый", "Темный");
+                string result = await DisplayActionSheet("Выбор фильтра", "Отмена", null, "Оригинал","Черно-белый", "Теплый", "Холодный", "Светлый", "Темный", "Винтаж", "Зеленка");
 
                 switch (result)
                 {
+                    case "Оригинал":
+                        filterImageBytes = null;
+                        imageFromGallery.Source = ImageSource.FromStream(() => new MemoryStream(currentImageBytes));
+                        return;
+
                     case "Черно-белый":
                         filter = new float[]
                         {
@@ -84,9 +109,9 @@ namespace TestXamarinApp
                     case "Теплый":
                         filter = new float[]
                         {
-                            1.2f, 0.0f, 0.0f, 0.0f, 0.0f,
-                            0.0f, 1.1f, 0.0f, 0.0f, 0.0f,
-                            0.0f, 0.1f, 0.9f, 0.0f, 0.0f,
+                            1.5f, 0.0f, 0.0f, 0.0f, 0.0f,
+                            0.0f, 1.2f, 0.0f, 0.0f, 0.0f,
+                            0.0f, 0.1f, 0.8f, 0.0f, 0.0f,
                             0.0f, 0.0f, 0.0f, 1.0f, 0.0f
                         };
                         break;
@@ -121,6 +146,26 @@ namespace TestXamarinApp
                         };
                         break;
 
+                    case "Винтаж":
+                        filter = new float[]
+                        {
+                            0.7f, 0.2f, 0.1f, 0.0f, 0.0f, // Красный с добавлением зеленого и синего
+                            0.3f, 0.7f, 0.1f, 0.0f, 0.0f, // Зеленый с добавлением красного и синего
+                            0.2f, 0.3f, 0.6f, 0.0f, 0.0f, // Синий с добавлением красного и зеленого
+                            0.0f, 0.0f, 0.0f, 1.0f, 0.0f  // Альфа-канал
+                        };
+                        break;
+
+                    case "Зеленка":
+                        filter = new float[]
+                        {
+                            0.2f, 0.5f, 0.2f, 0.0f, 0.0f,
+                            0.0f, 1.5f, 0.0f, 0.0f, 0.0f,
+                            0.2f, 0.5f, 0.5f, 0.0f, 0.0f,
+                            0.0f, 0.0f, 0.0f, 1.0f, 0.0f
+                        };
+                        break;
+
                     default:
                         return;
                 }
@@ -135,9 +180,9 @@ namespace TestXamarinApp
                     {
                         var imageBitmap = SKBitmapConverter.CreateSKBitmapFromBytes(currentImageBytes);
                         ColorMatrixFilter.ApplyColorFilterToSKBitmap(imageBitmap, filter);
-                        currentImageBytes = SKBitmapConverter.GetImageBytesFromSKBitmap(imageBitmap, SKEncodedImageFormat.Jpeg);
+                        filterImageBytes = SKBitmapConverter.GetImageBytesFromSKBitmap(imageBitmap, SKEncodedImageFormat.Jpeg);
                     });
-                    imageFromGallery.Source = ImageSource.FromStream(() => new MemoryStream(currentImageBytes));
+                    imageFromGallery.Source = ImageSource.FromStream(() => new MemoryStream(filterImageBytes));
                 }
                 catch (Exception)
                 {
@@ -150,6 +195,10 @@ namespace TestXamarinApp
                     imageActivityIndicator.IsVisible = false;
                     imageFromGallery.IsVisible = true;
                 }
+            }
+            else
+            {
+                await DisplayAlert("Ошибка", "Отсутствует изображение", "ОК");
             }
         }
     }

@@ -2,20 +2,60 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TestXamarinApp.Generation">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Сохранить фото"
+             IconImageSource="saveButton3.png"
+             Priority="2"
+             Order="Primary"
+             Clicked="SaveToGalleryButtonClicked"/>
+    </ContentPage.ToolbarItems>
+    
     <ContentPage.Content>
         <StackLayout Margin="20">
-            <Entry x:Name="YourEntry"
-               Placeholder="Введите запрос"
-               HorizontalOptions="FillAndExpand" />
+            <AbsoluteLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="30, 10, 30, 18">
+                <Image x:Name="ResultImage"
+                    Aspect="AspectFit"
+                    AbsoluteLayout.LayoutBounds="0,0,1,1"
+                    AbsoluteLayout.LayoutFlags="All"
+                    Margin="0, 0, 0, 0"
+                    HeightRequest="300"/>
+                <ActivityIndicator x:Name="imageActivityIndicator"
+                    Color="#3cbdfe"
+                    IsRunning="False"
+                    IsVisible="False"
+                    AbsoluteLayout.LayoutBounds="0.5,0.5,50,50"
+                    AbsoluteLayout.LayoutFlags="PositionProportional" />
+                <Label Text="Здесь будет изображение"
+                       x:Name="LabelMessage"
+                       AbsoluteLayout.LayoutBounds="0.5,0.5,1,1"
+                       AbsoluteLayout.LayoutFlags="All"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"
+                       TextColor="Gray"
+                       FontSize="Large"></Label>
+            </AbsoluteLayout>
+            
+            <Frame CornerRadius="15"
+                   BorderColor="#3cbdfe"
+                   Padding="5,0,5,0"
+                   HasShadow="False"
+                   HorizontalOptions="FillAndExpand">
+
+                <Entry x:Name="YourEntry"
+                       Placeholder="Введите запрос"
+                       HorizontalOptions="FillAndExpand"
+                       PlaceholderColor="Black"
+                       TextColor="Black"/>
+            </Frame>
 
             <Button Text="Generate Image"
+                x:Name="GenerationButton"
                 Clicked="GenerateImageButton_Clicked"
                 HorizontalOptions="Center"
-                VerticalOptions="CenterAndExpand" />
-
-            <Image x:Name="ResultImage"
-               HorizontalOptions="Center"
-               VerticalOptions="CenterAndExpand" />
+                VerticalOptions="CenterAndExpand"
+                BackgroundColor="#3cbdfe"
+                CornerRadius="15"
+                TextColor="White"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -8,14 +8,14 @@ using Newtonsoft.Json.Linq;
 
 namespace TestXamarinApp
 {
-    public class Text2ImageAPI
+    public class ImageGenerator
     {
         private readonly string apiUrl;
         private readonly string apiKey;
         private readonly string secretKey;
         private readonly HttpClient httpClient;
 
-        public Text2ImageAPI(string url, string apiKey, string secretKey)
+        public ImageGenerator(string url, string apiKey, string secretKey)
         {
             this.apiUrl = url;
             this.apiKey = apiKey;
