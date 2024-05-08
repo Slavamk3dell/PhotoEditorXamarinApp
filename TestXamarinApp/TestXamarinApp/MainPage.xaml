@@ -37,4 +37,18 @@
             <Color>#3cbdfe</Color>
         </NavigationPage.BarTextColor>
     </NavigationPage>
+
+    <NavigationPage Title="Editing" IconImageSource="filterButton.png">
+        <x:Arguments>
+            <local:Editing Title="Editing"/>
+        </x:Arguments>
+
+        <NavigationPage.BarBackgroundColor>
+            <Color>#000000</Color>
+        </NavigationPage.BarBackgroundColor>
+
+        <NavigationPage.BarTextColor>
+            <Color>#3cbdfe</Color>
+        </NavigationPage.BarTextColor>
+    </NavigationPage>
 </TabbedPage>

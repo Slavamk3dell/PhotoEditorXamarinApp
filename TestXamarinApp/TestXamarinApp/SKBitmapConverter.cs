@@ -38,13 +38,20 @@ namespace TestXamarinApp
             }
         }
 
-        public static byte[] GetImageBytesFromSKBitmap(SKBitmap bitmap, SKEncodedImageFormat format)
+        public static byte[] GetImageBytesFromSKBitmap(SKBitmap bitmap, SKEncodedImageFormat format, int quality = 100)
         {
             using (SKImage image = SKImage.FromBitmap(bitmap))
-            using (var data = image.Encode(format, 100))
+            using (var data = image.Encode(format, quality))
             {
                 return data.ToArray();
             }
+        }
+
+        public static double GetImageSizeInMB(byte[] imageBytes)
+        {
+            long sizeInBytes = imageBytes.Length;
+            double sizeInMB = (double)sizeInBytes / (1024 * 1024);
+            return sizeInMB;
         }
     }
 }

@@ -11,8 +11,8 @@
     </ContentPage.ToolbarItems>
     
     <ContentPage.Content>
-        <StackLayout Margin="20">
-            <AbsoluteLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="30, 10, 30, 18">
+        <StackLayout>
+            <AbsoluteLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="20, 0, 20, 0">
                 <Image x:Name="ResultImage"
                     Aspect="AspectFit"
                     AbsoluteLayout.LayoutBounds="0,0,1,1"
@@ -39,13 +39,16 @@
                    BorderColor="#3cbdfe"
                    Padding="5,0,5,0"
                    HasShadow="False"
-                   HorizontalOptions="FillAndExpand">
+                   HorizontalOptions="FillAndExpand"
+                   Margin="20,0,20,0">
 
                 <Entry x:Name="YourEntry"
                        Placeholder="Введите запрос"
                        HorizontalOptions="FillAndExpand"
                        PlaceholderColor="Black"
-                       TextColor="Black"/>
+                       TextColor="Black"
+                       VerticalTextAlignment="Center"
+                       HorizontalTextAlignment="Center"/>
             </Frame>
 
             <Button Text="Generate Image"

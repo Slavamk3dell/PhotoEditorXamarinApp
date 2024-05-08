@@ -66,7 +66,7 @@ namespace TestXamarinApp
             return json["uuid"].ToString();
         }
 
-        public async Task<List<string>> CheckGenerationStatusAsync(string requestId, int attempts = 10, int delayInSeconds = 10)
+        public async Task<List<string>> CheckGenerationStatusAsync(string requestId, int attempts = 14, int delayInSeconds = 5)
         {
             var results = new List<string>();
 

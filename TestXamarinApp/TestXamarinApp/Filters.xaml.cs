@@ -29,6 +29,13 @@ namespace TestXamarinApp
                 imageFromGallery.Source = ImageSource.FromStream(() => new MemoryStream(currentImageBytes));
                 LabelMessage.IsVisible = false;
             });
+            MessagingCenter.Subscribe<Editing, byte[]>(this, "ImageChanged", (sender, newImage) =>
+            {
+                currentImageBytes = newImage;
+                filterImageBytes = null;
+                imageFromGallery.Source = ImageSource.FromStream(() => new MemoryStream(currentImageBytes));
+                LabelMessage.IsVisible = false;
+            });
         }
 
         async void OnPickPhotoButtonClicked(object sender, EventArgs e)
@@ -43,6 +50,8 @@ namespace TestXamarinApp
                     currentImageBytes = memoryStream.ToArray();
 
                     imageFromGallery.Source = ImageSource.FromStream(() => new MemoryStream(currentImageBytes));
+
+                    MessagingCenter.Send(this, "ImageChanged", currentImageBytes);
                 }
                 LabelMessage.IsVisible = false;
             }
@@ -74,6 +83,7 @@ namespace TestXamarinApp
                 finally
                 {
                     await DisplayAlert("Готово", "Изображение успешно сохранено!!!", "OK");
+                    MessagingCenter.Send(this, "ImageChanged", currentImageBytes);
                 }
             }
             else
@@ -149,10 +159,10 @@ namespace TestXamarinApp
                     case "Винтаж":
                         filter = new float[]
                         {
-                            0.7f, 0.2f, 0.1f, 0.0f, 0.0f, // Красный с добавлением зеленого и синего
-                            0.3f, 0.7f, 0.1f, 0.0f, 0.0f, // Зеленый с добавлением красного и синего
-                            0.2f, 0.3f, 0.6f, 0.0f, 0.0f, // Синий с добавлением красного и зеленого
-                            0.0f, 0.0f, 0.0f, 1.0f, 0.0f  // Альфа-канал
+                            0.7f, 0.2f, 0.1f, 0.0f, 0.0f,
+                            0.3f, 0.7f, 0.1f, 0.0f, 0.0f,
+                            0.2f, 0.3f, 0.6f, 0.0f, 0.0f,
+                            0.0f, 0.0f, 0.0f, 1.0f, 0.0f
                         };
                         break;
 

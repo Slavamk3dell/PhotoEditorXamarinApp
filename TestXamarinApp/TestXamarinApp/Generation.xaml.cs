@@ -14,6 +14,9 @@ namespace TestXamarinApp
     public partial class Generation : ContentPage
     {
         private static byte[] currentImageBytes;
+        private static string apiUrl = "https://api-key.fusionbrain.ai/";
+        private static string apiKey = "B902B6DBF831F82154ECE55B796D8390";
+        private static string secretKey = "201FBE7F700C01BFD5A26BD2093E00BF";
         public Generation()
         {
             InitializeComponent();
@@ -27,10 +30,6 @@ namespace TestXamarinApp
             LabelMessage.IsVisible = false;
             GenerationButton.IsEnabled = false;
 
-            var apiUrl = "https://api-key.fusionbrain.ai/";
-            var apiKey = "E7385E834DD1111F486D3B3D1FC87425";
-            var secretKey = "6E025281D9209C85D8FDB19621A0072B";
-
             var text2ImageApi = new ImageGenerator(apiUrl, apiKey, secretKey);
 
             var modelId = await text2ImageApi.GetModelIdAsync();
@@ -38,9 +37,19 @@ namespace TestXamarinApp
             var prompt = YourEntry.Text;
             var uuid = await text2ImageApi.GenerateImageAsync(prompt, modelId);
 
-            Console.WriteLine($"Request sent. UUID: {uuid}");
-
             var images = await text2ImageApi.CheckGenerationStatusAsync(uuid);
+
+            if (images.Count < 1)
+            {
+                await DisplayAlert("Ошибка", "Генерация слишком долгая. Попробуйте позже", "ОК");
+                GenerationButton.IsEnabled = true;
+                imageActivityIndicator.IsRunning = false;
+                imageActivityIndicator.IsVisible = false;
+                ResultImage.IsVisible = true;
+                if (currentImageBytes == null)
+                    LabelMessage.IsVisible = true;
+                return;
+            }
 
             currentImageBytes = Base64ImageConverter.ConvertBase64ToByteArray(images[0]);
 
@@ -51,7 +60,6 @@ namespace TestXamarinApp
             imageActivityIndicator.IsRunning = false;
             imageActivityIndicator.IsVisible = false;
             ResultImage.IsVisible = true;
-
             GenerationButton.IsEnabled = true;
         }
 
