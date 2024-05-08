@@ -3,6 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TestXamarinApp.Editing">
     <ContentPage.ToolbarItems>
+        <ToolbarItem
+             Text="Выбрать фильтр"
+             IconImageSource="filterButtonG3.png"
+             Priority="0"
+             Order="Primary"
+             Clicked="OnFilterButtonClicked"/>
         <ToolbarItem Text="Выбрать фото"
              IconImageSource="addButton10.png"
              Priority="1"
@@ -42,7 +48,8 @@
 
             <StackLayout>
                 <Label x:Name="SizeImage" HorizontalOptions="Center"
-                       Margin="0,0,0,10"></Label>
+                       Margin="0,0,0,10"
+                       IsVisible="false"></Label>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,0,0,10">
                     <Button x:Name="CompressButton" Text="Сжать изображение" Clicked="CompressButtonClicked"
                             BackgroundColor="#3cbdfe"

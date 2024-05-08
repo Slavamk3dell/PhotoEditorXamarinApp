@@ -10,9 +10,9 @@
             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
             android:TabbedPage.ToolbarPlacement="Bottom">
 
-    <NavigationPage Title="Filters" IconImageSource="filters.png">
+    <NavigationPage Title="Editing" IconImageSource="filterButton.png">
         <x:Arguments>
-            <local:Filters Title="Filters" IconImageSource="filters.png"/>
+            <local:Editing Title="Editing"/>
         </x:Arguments>
 
         <NavigationPage.BarBackgroundColor>
@@ -27,20 +27,6 @@
     <NavigationPage Title="Generation" IconImageSource="AI.png">
         <x:Arguments>
             <local:Generation Title="Generation" IconImageSource="filterButton.png"/>
-        </x:Arguments>
-
-        <NavigationPage.BarBackgroundColor>
-            <Color>#000000</Color>
-        </NavigationPage.BarBackgroundColor>
-
-        <NavigationPage.BarTextColor>
-            <Color>#3cbdfe</Color>
-        </NavigationPage.BarTextColor>
-    </NavigationPage>
-
-    <NavigationPage Title="Editing" IconImageSource="filterButton.png">
-        <x:Arguments>
-            <local:Editing Title="Editing"/>
         </x:Arguments>
 
         <NavigationPage.BarBackgroundColor>
