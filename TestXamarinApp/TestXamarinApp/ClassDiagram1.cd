@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Comment CommentText="Накладывает фильтр">
+    <Position X="6.354" Y="1.931" Height="0.306" Width="1.478" />
+  </Comment>
+  <Class Name="TestXamarinApp.SKBitmapConverter">
+    <Position X="0.5" Y="0.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAAAAAAAAAAAAAUAAAAAQAAAAAABAAAAAA=</HashCode>
+      <FileName>SKBitmapConverter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TestXamarinApp.ImageGenerator">
+    <Position X="3.5" Y="0.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AgAIAAAQAAAAAACAAAAAAAAAAAAAAAgAAIAAAAAAAAQ=</HashCode>
+      <FileName>ImageGenerator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TestXamarinApp.CompressMessage">
+    <Position X="0.5" Y="4" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAABAAAAAAAAAAAACAAAAAAAAAAAAA=</HashCode>
+      <FileName>CompressMessage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TestXamarinApp.Base64ImageConverter">
+    <Position X="0.5" Y="2.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Base64ImageConverter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TestXamarinApp.ColorMatrixFilter">
+    <Position X="6" Y="0.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ColorMatrixFilter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TestXamarinApp.Editing">
+    <Position X="3.5" Y="4.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACIAAAIAAAAAAIIAAAAAAgQgkAAAAAAAAAAAAA=</HashCode>
+      <FileName>Editing.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TestXamarinApp.Generation">
+    <Position X="6" Y="4.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAYAAAAAACAAAAAAAAAAAgAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>Generation.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TestXamarinApp.EditingCompression">
+    <Position X="8.75" Y="4.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAACQAAAAAAEAAAAIAAAAAAgAAAAEAQAAAAAAAAA=</HashCode>
+      <FileName>EditingCompression.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TestXamarinApp.MainPage">
+    <Position X="6.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MainPage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="TestXamarinApp.IImageService">
+    <Position X="8.5" Y="0.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAggAAAAAAAAAAAAA=</HashCode>
+      <FileName>IImageService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

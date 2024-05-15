@@ -53,7 +53,7 @@
 
             <Button Text="Generate Image"
                 x:Name="GenerationButton"
-                Clicked="GenerateImageButton_Clicked"
+                Clicked="GenerateImageButtonClicked"
                 HorizontalOptions="Center"
                 VerticalOptions="CenterAndExpand"
                 BackgroundColor="#3cbdfe"

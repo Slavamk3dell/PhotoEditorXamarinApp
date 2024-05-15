@@ -47,9 +47,13 @@
             </AbsoluteLayout>
 
             <StackLayout>
-                <Label x:Name="SizeImage" HorizontalOptions="Center"
-                       Margin="0,0,0,10"
-                       IsVisible="false"></Label>
+                <StackLayout HorizontalOptions="Center" Margin="0,0,0,10" Orientation="Horizontal">
+                    <Label x:Name="SizeImage"
+                           IsVisible="false"/>
+                    <Label x:Name="FormatImage"
+                           IsVisible="false"></Label>
+                </StackLayout>
+                
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,0,0,10">
                     <Button x:Name="CompressButton" Text="Сжать изображение" Clicked="CompressButtonClicked"
                             BackgroundColor="#3cbdfe"

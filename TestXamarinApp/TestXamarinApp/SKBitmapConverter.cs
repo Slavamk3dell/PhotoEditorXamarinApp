@@ -53,5 +53,51 @@ namespace TestXamarinApp
             double sizeInMB = (double)sizeInBytes / (1024 * 1024);
             return sizeInMB;
         }
+
+        public static string GetImageFormat(byte[] imageBytes)
+        {
+            try
+            {
+                using (SKCodec codec = SKCodec.Create(new MemoryStream(imageBytes)))
+                {
+                    if (codec == null)
+                    {
+                        return "Unknown";
+                    }
+
+                    switch (codec.EncodedFormat)
+                    {
+                        case SKEncodedImageFormat.Jpeg:
+                            return "jpg";
+                        case SKEncodedImageFormat.Png:
+                            return "png";
+                        case SKEncodedImageFormat.Webp:
+                            return "webp";
+                        default:
+                            return "Unknown";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ошибка при определении формата изображения: {ex.Message}");
+                return "Unknown";
+            }
+        }
+
+        public static SKEncodedImageFormat ConvertStringToEncodedImageFormat(string formatString)
+        {
+            switch (formatString)
+            {
+                case "jpg":
+                    return SKEncodedImageFormat.Jpeg;
+                case "png":
+                    return SKEncodedImageFormat.Png;
+                case "webp":
+                    return SKEncodedImageFormat.Webp;
+                default:
+                    throw new ArgumentException($"Неизвестный формат: {formatString}");
+            }
+        }
     }
 }

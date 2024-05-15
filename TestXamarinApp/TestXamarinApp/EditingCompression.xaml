@@ -5,10 +5,35 @@
              Title="Сжать">
 
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout VerticalOptions="Center">
+            <Label x:Name="SizeLabel" HorizontalOptions="Center"
+                   FontSize="Medium"></Label>
+            <StackLayout Margin="20" HorizontalOptions="Fill">
+                <Label Text="Выберите значение сжатия:" HorizontalOptions="CenterAndExpand"
+                       FontSize="Medium"/>
+                <Slider x:Name="slider" Minimum="0" Maximum="100" Value="100" ValueChanged="SliderValueChanged"/>
+                <Label x:Name="label"
+                       HorizontalOptions="Center"
+                       Text="{Binding Value, Source={x:Reference slider}, StringFormat='Значение: {0:F0}'}"/>
+            </StackLayout>
+            <StackLayout HorizontalOptions="Center">
+                <Button x:Name="ApplyButton"
+                        Text="Применить"
+                        BackgroundColor="#3cbdfe"
+                        CornerRadius="15"
+                        TextColor="White"
+                        WidthRequest="150"
+                        FontSize="13"
+                        Clicked="ApplyButtonClicked"></Button>
+                <Button x:Name="ConfirmButton"
+                        Text="Подтвердить"
+                        BackgroundColor="#3cbdfe"
+                        CornerRadius="15"
+                        TextColor="White"
+                        WidthRequest="150"
+                        FontSize="13"
+                        Clicked="ConfirmButtonClicked"></Button>
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

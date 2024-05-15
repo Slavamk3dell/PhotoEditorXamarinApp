@@ -18,27 +18,23 @@ namespace TestXamarinApp.Droid
     {
         public Task<Stream> GetImageStreamAsync()
         {
-            // Define the Intent for getting images
             Intent intent = new Intent();
             intent.SetType("image/*");
             intent.SetAction(Intent.ActionGetContent);
 
-            // Start the picture-picker activity (resumes in MainActivity.cs)
             MainActivity.Instance.StartActivityForResult(
                 Intent.CreateChooser(intent, "Select Picture"),
                 MainActivity.PickImageId);
 
-            // Save the TaskCompletionSource object as a MainActivity property
             MainActivity.Instance.PickImageTaskCompletionSource = new TaskCompletionSource<Stream>();
 
-            // Return Task object
             return MainActivity.Instance.PickImageTaskCompletionSource.Task;
         }
 
-        public void SaveImageToGallery(byte[] imageBytes)
+        public void SaveImageToGallery(byte[] imageBytes, string imageFormat)
         {
             string timestamp = DateTime.Now.ToString("yyyyMMddHHmmss");
-            string imageName = $"image_{timestamp}.jpg";  // Уникальное имя изображения
+            string imageName = $"image_{timestamp}.{imageFormat}";
             string imageFilePath = Path.Combine(Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryPictures).AbsolutePath, imageName);
 
             File.WriteAllBytes(imageFilePath, imageBytes);

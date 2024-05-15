@@ -7,6 +7,6 @@ namespace TestXamarinApp
     public interface IImageService
     {
         Task<Stream> GetImageStreamAsync();
-        void SaveImageToGallery(byte[] imageBytes);
+        void SaveImageToGallery(byte[] imageBytes, string imageFormat);
     }
 }

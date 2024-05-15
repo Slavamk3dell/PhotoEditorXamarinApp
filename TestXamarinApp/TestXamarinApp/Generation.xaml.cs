@@ -13,7 +13,7 @@ namespace TestXamarinApp
 {
     public partial class Generation : ContentPage
     {
-        private static byte[] currentImageBytes;
+        private static byte[] CurrentImageBytes;
         private static string apiUrl = "https://api-key.fusionbrain.ai/";
         private static string apiKey = "B902B6DBF831F82154ECE55B796D8390";
         private static string secretKey = "201FBE7F700C01BFD5A26BD2093E00BF";
@@ -22,7 +22,7 @@ namespace TestXamarinApp
             InitializeComponent();
         }
 
-        private async void GenerateImageButton_Clicked(object sender, EventArgs e)
+        private async void GenerateImageButtonClicked(object sender, EventArgs e)
         {
             imageActivityIndicator.IsRunning = true;
             imageActivityIndicator.IsVisible = true;
@@ -46,16 +46,16 @@ namespace TestXamarinApp
                 imageActivityIndicator.IsRunning = false;
                 imageActivityIndicator.IsVisible = false;
                 ResultImage.IsVisible = true;
-                if (currentImageBytes == null)
+                if (CurrentImageBytes == null)
                     LabelMessage.IsVisible = true;
                 return;
             }
 
-            currentImageBytes = Base64ImageConverter.ConvertBase64ToByteArray(images[0]);
+            CurrentImageBytes = Base64ImageConverter.ConvertBase64ToByteArray(images[0]);
 
-            ResultImage.Source = ImageSource.FromStream(() => new MemoryStream(currentImageBytes));
+            ResultImage.Source = ImageSource.FromStream(() => new MemoryStream(CurrentImageBytes));
 
-            MessagingCenter.Send(this, "ImageChanged", currentImageBytes);
+            MessagingCenter.Send(this, "ImageChanged", CurrentImageBytes);
 
             imageActivityIndicator.IsRunning = false;
             imageActivityIndicator.IsVisible = false;
@@ -65,13 +65,13 @@ namespace TestXamarinApp
 
         async void SaveToGalleryButtonClicked(object sender, EventArgs e)
         {
-            if (currentImageBytes != null)
+            if (CurrentImageBytes != null)
             {
                 try
                 {
                     await Task.Run(() =>
                     {
-                        DependencyService.Get<IImageService>().SaveImageToGallery(currentImageBytes);
+                        DependencyService.Get<IImageService>().SaveImageToGallery(CurrentImageBytes, "jpg");
                     });
                 }
                 catch (Exception)
